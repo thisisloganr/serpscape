@@ -1,0 +1,44 @@
+import time
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from datetime import datetime, timedelta, date
+
+# Set days
+today = (datetime.now()).strftime('%Y-%m-%d')
+
+# List of SERPs
+urls = ['https://www.google.com/search?q=stuff&rlz=1C1GCEA_enUS762US762&oq=stuff&aqs=chrome..69i57j0i271l3j69i65.584j0j1&sourceid=chrome&ie=UTF-8',.
+        'https://www.google.com/search?q=headphones&rlz=1C1GCEA_enUS762US762&oq=headphones&aqs=chrome..69i57.932j0j9&sourceid=chrome&ie=UTF-8',
+        'https://www.google.com/search?rlz=1C1GCEA_enUS762US762&ei=6ac-YPG3D5DZ5gLdpJjYBg&q=running+shoes&oq=running+shoes&gs_lcp=Cgdnd3Mtd2l6EAMyBAgAEEMyAggAMgIIADIFCAAQyQMyBQgAEJIDMgUIABCSAzICCAAyBQgAELEDMgIIADICCAA6EQgAELADEIoDELcDENQDEOUCOhQIABCwAxCKAxC3AxDUAxDlAhCLAzoFCAAQkQI6CAguEMcBEKMCOggIABCxAxCDAToCCC46CAguELEDEIMBOgsILhCxAxDHARCjAjoFCC4QsQM6BQgAEIsDUMOMAVjHlwFgsJgBaAJwAngAgAG1AYgB-wqSAQQxMS4zmAEAoAEBqgEHZ3dzLXdpesgBCrgBAsABAQ&sclient=gws-wiz&ved=0ahUKEwix0PvswJLvAhWQrFkKHV0SBmsQ4dUDCA0&uact=5',
+        'https://www.google.com/search?rlz=1C1GCEA_enUS762US762&ei=_6c-YLjUAYyo5gKvl6ywCQ&q=smart+watch&oq=smart+watch&gs_lcp=Cgdnd3Mtd2l6EAMyBwgAELEDEEMyBQgAELEDMgIIADICCAAyBQgAELEDMgUIABCxAzICCAAyAggAMgIIADIFCAAQyQM6FAgAELADEIoDELcDENQDEOUCEIsDOgQIABBDOgoILhDHARCjAhBDOggILhDHARCjAlDqYFinaGCaaWgBcAJ4AIABjwKIAZoKkgEFNy40LjGYAQCgAQGqAQdnd3Mtd2l6yAEKuAECwAEB&sclient=gws-wiz&ved=0ahUKEwj4z6z3wJLvAhUMlFkKHa8LC5YQ4dUDCA0&uact=5',
+        'https://www.google.com/search?rlz=1C1GCEA_enUS762US762&ei=Dqg-YO3VFeKf_QbR-ILYBg&q=movie+theaters&oq=movie+theaters&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEJECMggIABCxAxDJAzIFCAAQkgMyBQgAELEDMgUIABCxAzIFCAAQsQMyAggAMgIIADICCAAyCAgAELEDEIMBOhQIABCwAxCKAxC3AxDUAxDlAhCLAzoRCAAQsAMQigMQtwMQ1AMQ5QI6BAgAEEM6CAguEMcBEKMCOgsILhCxAxDHARCjAjoKCC4QxwEQowIQQzoECC4QQzoHCAAQsQMQQzoHCC4QsQMQQzoKCAAQsQMQyQMQQzoECAAQCjoFCAAQyQM6CAguEMcBEK8BUK-SAVj1rgFgrrABaANwAngAgAGnAogBsQ-SAQU3LjkuMZgBAKABAaoBB2d3cy13aXrIAQq4AQLAAQE&sclient=gws-wiz&ved=0ahUKEwjtlNT-wJLvAhXiT98KHVG8AGsQ4dUDCA0&uact=5',]
+
+names = ['SERP descriptor 1',
+'SERP descriptor 2',
+'SERP descriptor 3',
+'SERP descriptor 4',
+'SERP descriptor 5']
+
+paths = ["C:/SERPScape/folder1/",
+"C:/SERPScape/folder2",
+"C:/SERPScape/folder2",
+"C:/SERPScape/folder3",
+"C:/SERPScape/folder4"]
+
+
+for i in range(len(urls)):
+
+options = webdriver.ChromeOptions()
+options.headless = True
+driver = webdriver.Chrome(options=options)
+
+driver.get(urls[i])
+
+S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment                                                                                                                
+driver.find_element_by_tag_name('body').screenshot(paths[i] + names[i] + " " + today + '.png')
+
+driver.quit()
+
+print("end...")
